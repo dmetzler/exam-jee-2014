@@ -160,3 +160,24 @@ C'est encore la même API que l'on utilise en passant en plus un paramètre.
         }
 
 
+== JEE-11 Ajout d'une transaction
+
+L'ajout d'une transaction nous demande de modifer l'entité pour gérer une relation @OneToMany :
+
+        @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
+        private List<TransactionImpl> transactions = new ArrayList<>();
+
+au niveau du DAO, l'implémentation de addTransaction devra créer une transaction et mettre à jour la balance du compte correspondant.
+
+        @Override
+        public Transaction addTransaction(Long id, TxType type, DateTime date,
+                String description, int amount) {
+            Account  acc = findAccount(id);
+            Transaction tx = new TransactionImpl((AccountImpl) acc, type, date, description, amount);
+            em.persist(tx );
+            acc.setBalance(acc.getBalance() + (TxType.CREDIT.equals(type) ? amount : -amount));
+            em.merge(acc);
+            return tx ;
+        }
+
+

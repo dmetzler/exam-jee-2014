@@ -42,10 +42,14 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public Transaction addTransaction(Long id, TxType credit,
-            DateTime dateTime, String description, int amount) {
-        // TODO Auto-generated method stub
-        return null;
+    public Transaction addTransaction(Long id, TxType type, DateTime date,
+            String description, int amount) {
+        Account  acc = findAccount(id);
+        Transaction tx = new TransactionImpl((AccountImpl) acc, type, date, description, amount);
+        em.persist(tx );
+        acc.setBalance(acc.getBalance() + (TxType.CREDIT.equals(type) ? amount : -amount));
+        em.merge(acc);
+        return tx ;
     }
 
     @Override
@@ -65,8 +69,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Transaction findTransaction(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return em.find(TransactionImpl.class, id);
     }
 
 }
