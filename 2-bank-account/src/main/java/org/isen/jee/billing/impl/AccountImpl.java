@@ -14,6 +14,7 @@ import org.isen.jee.billing.Account;
 import org.isen.jee.billing.Transaction;
 
 @Entity
+@XmlRootElement(name="account")
 public class AccountImpl implements Account  {
 
 

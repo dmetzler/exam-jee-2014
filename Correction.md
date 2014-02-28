@@ -181,3 +181,9 @@ au niveau du DAO, l'implémentation de addTransaction devra créer une transacti
         }
 
 
+== JEE-12 JAX-RS
+
+Comme j'avais oublié d'enlever l'implémentation de l'objet AccountService, il suffisait de donner un moyen de sérialiser un Account en utilisant JAXB et ajouter l'annoation @XmlRootElement à la classe AccountImpl.
+
+
+
