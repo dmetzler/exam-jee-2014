@@ -64,3 +64,25 @@ Il faut aussi mettre à jour les test précédents pour qu'il ne plantent pas un
         assertTrue(validator.isValid(card, 2180));
         assertFalse(validator.isValid(card, 3456));
     }
+
+== JEE-6 : Servlet
+
+On crée une classe CreditCardServlet qui étends HttpServlet. On l'annote avec @WebServlet("/cc") et on décommente la ligne de JettyHarness : on a une servlet qui démarre et qui peut commencer à servir des requêtes.
+
+En implémentant la méthode doGet comme ceci :
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+        out.print("ok");
+    }
+
+Les test passent. Il faut effectivement ajoute une clause fail au troisième test que est censé vérifier qu'il y a une erreur.
+
+On peut maintenant récupérer les paramètres de la requête pour construire une carte et appeler le validateur. Cela se fait par l'intermédiaire de req.getParameter(). Cette méthode peut renvoyer null et c'est un cas qu'il faut traiter. On ajoute d'ailleurs un test sur la vérification de la carte (cas d'une carte nulle).
+
+
+
+
+

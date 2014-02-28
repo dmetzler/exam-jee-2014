@@ -78,6 +78,13 @@ public class CreditCardValidatorTest {
         assertFalse(validator.isValid(card, 3456));
     }
 
+    @Test
+    public void aNullCardIsInvalid() throws Exception {
+        for (int ccv = 0; ccv < 10000; ccv++) {
+            assertFalse(validator.isValid(null, ccv));
+        }
+    }
+
     private void assertNoCCVCanValidateCard(CreditCard card) {
         for (int ccv = 0; ccv < card.getType().getMaxCCVNumber(); ccv++) {
             assertFalse(

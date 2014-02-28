@@ -37,6 +37,7 @@ public class ServletTest extends JettyHarness {
     public void anInvalidCardReturnPreconditionFailed() throws Exception {
         try {
             get(getBaseUri() + "/cc?ccNumber=111");
+            fail("Should throw a 412 error");
         } catch (WebRuntimeException e) {
             assertEquals(412, e.getCode());
         }

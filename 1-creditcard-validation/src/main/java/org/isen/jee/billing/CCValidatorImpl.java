@@ -17,11 +17,15 @@ public class CCValidatorImpl implements CCValidator {
     @Override
     public boolean isValid(CreditCard card, int ccv) {
 
-        return isValidDate(card) && ccvMatchesNumber(card, ccv);
+        return card != null && isValidDate(card) && ccvMatchesNumber(card, ccv);
 
     }
 
     private boolean isValidDate(CreditCard card) {
+        if (card.getMonth() > 12 || card.getMonth() < 0) {
+            return false;
+        }
+
         //On calcule la fin du mois
         DateTime cardDate = new DateTime(card.getYear(), card.getMonth(), 15,
                 0, 0, 0, 0).dayOfMonth().withMaximumValue();

@@ -6,7 +6,9 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.isen.jee.billing.servlet.CreditCardServlet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,8 +45,8 @@ public class JettyHarness {
 
         // Uncomment here to add your own servlet implementation
 
-        // context.addServlet(new ServletHolder(new MyCreditCardServlet()),
-        // SERVLET_PATH);
+         context.addServlet(new ServletHolder(new CreditCardServlet()),
+         SERVLET_PATH);
 
         server.setHandler(context);
         server.start();
