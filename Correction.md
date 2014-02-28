@@ -86,3 +86,36 @@ On peut maintenant récupérer les paramètres de la requête pour construire un
 
 
 
+== JEE-7 JPA : création d'un Account
+
+En exécutant AccountTest, on a un première erreur :
+
+        javax.naming.NameNotFoundException: Name "global/2-jpa/AccountDAOImpl" not found.
+
+Il s'agit de notre EJB qui n'est pas trouvé par le conteneur. Pour qu'il soit trouvé, il faut d'ajouter l'annotation @Singleton sur la classe.
+Une fois cette annotation ajoutée, il nous faut implémenter la méthode createAccount.
+
+        @PersistenceContext(name="account")
+        EntityManager em;
+
+        @Override
+        public Account createAccount(String ownerName, int initialBalance,
+                String ccNumber) {
+            Account account  = new AccountImpl(ownerName, initialBalance, ccNumber);
+            em.persist(account);
+            return account;
+
+        }
+
+Il faut aussi demander au contenur d'injecter un EntityManager lié au contexte de persistence `account`. Cela se fait par le biai de l'annotation @PersistenceContext. Le nom de l'unité de persistence est celui renseigné dans le fichier `META-INF/persistence.xml` qui était déjà fourni.
+
+Maintenant, pour que la classe AccountImpl soit persistable, il faut l'annoter avec @Entity.
+
+Ensuite il faut définir un propriété id annoté avec @GeneratedValue et @Id qui servira de clé primaire et remplir le corp des différents getter et setter.
+
+Enfin, il faut dans le DAO coder la méthode findAccount.
+
+        @Override
+        public Account findAccount(Long id) {
+            return em.find(AccountImpl.class, id);
+        }
