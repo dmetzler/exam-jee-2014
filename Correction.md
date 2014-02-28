@@ -52,3 +52,15 @@ On va vérifier maintenant qu'une date incorrecte ne permet pas de valider une d
 Cela se fait en ajoutant une clause isValidDate à l'implémentation du validateur. Cela nous permet aussi d'extraire la validation par CCV dans une méthode distincte.
 
 Il faut aussi mettre à jour les test précédents pour qu'il ne plantent pas une fois la date prise au hasard soit dépassée.
+
+== JEE-5 : Vérification d'une AMEX
+
+    On ajoute un test pour vérifier le cas de l'AMEX
+
+    @Test
+    public void ItCanValidateAnAmexCard() throws Exception {
+        CreditCard card = new CreditCardImpl("1111-2222-3333-0000", 10, 5000,
+                CCType.AMEX);
+        assertTrue(validator.isValid(card, 2180));
+        assertFalse(validator.isValid(card, 3456));
+    }

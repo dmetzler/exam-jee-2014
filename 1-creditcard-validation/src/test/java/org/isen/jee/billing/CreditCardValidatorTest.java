@@ -1,8 +1,6 @@
 package org.isen.jee.billing;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.isen.jee.billing.api.CCType;
 import org.isen.jee.billing.api.CCValidator;
@@ -70,6 +68,14 @@ public class CreditCardValidatorTest {
                 PAST_DATE.getMonthOfYear(), PAST_DATE.getYear(), CCType.VISA);
         assertNoCCVCanValidateCard(card);
 
+    }
+
+    @Test
+    public void ItCanValidateAnAmexCard() throws Exception {
+        CreditCard card = new CreditCardImpl("1111-2222-3333-0000", 10, 5000,
+                CCType.AMEX);
+        assertTrue(validator.isValid(card, 2180));
+        assertFalse(validator.isValid(card, 3456));
     }
 
     private void assertNoCCVCanValidateCard(CreditCard card) {
