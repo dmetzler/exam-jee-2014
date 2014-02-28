@@ -15,14 +15,13 @@ import org.joda.time.DateTime;
 @Singleton
 public class AccountDAOImpl implements AccountDAO {
 
-
-    @PersistenceContext(name="account")
+    @PersistenceContext(name = "account")
     EntityManager em;
 
     @Override
     public Account createAccount(String ownerName, int initialBalance,
             String ccNumber) {
-        Account account  = new AccountImpl(ownerName, initialBalance, ccNumber);
+        Account account = new AccountImpl(ownerName, initialBalance, ccNumber);
         em.persist(account);
         return account;
 
@@ -34,9 +33,12 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public Account findAccountByCC(String string) {
-        // TODO Auto-generated method stub
-        return null;
+    public Account findAccountByCC(String number) {
+        return em
+                .createQuery(
+                        "SELECT a FROM AccountImpl a WHERE a.ccNumber = :number",
+                        Account.class).setParameter("number", number)
+                .getResultList().get(0);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void deleteAccount(Long id) {
         Account account = findAccount(id);
-        if(account != null) {
+        if (account != null) {
             em.remove(account);
         }
 
@@ -57,7 +59,8 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> list() {
-        return em.createQuery("SELECT a FROM AccountImpl a").getResultList();
+        return em.createQuery("SELECT a FROM AccountImpl a", Account.class)
+                .getResultList();
     }
 
     @Override
@@ -65,6 +68,5 @@ public class AccountDAOImpl implements AccountDAO {
         // TODO Auto-generated method stub
         return null;
     }
-
 
 }

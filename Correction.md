@@ -146,3 +146,17 @@ La syntaxe JQPL d'OpenJPA est un peu plus restrictive que celle d'Hibernate. Il 
 
 
 
+== JEE-10 Trouver un compte en fonction du numéro de CB
+
+C'est encore la même API que l'on utilise en passant en plus un paramètre.
+
+        @Override
+        public Account findAccountByCC(String number) {
+            return em
+                    .createQuery(
+                            "SELECT a FROM AccountImpl a WHERE a.ccNumber = :number",
+                            Account.class).setParameter("number", number)
+                    .getResultList().get(0);
+        }
+
+
