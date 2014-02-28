@@ -48,7 +48,10 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deleteAccount(Long id) {
-        // TODO Auto-generated method stub
+        Account account = findAccount(id);
+        if(account != null) {
+            em.remove(account);
+        }
 
     }
 

@@ -119,3 +119,16 @@ Enfin, il faut dans le DAO coder la méthode findAccount.
         public Account findAccount(Long id) {
             return em.find(AccountImpl.class, id);
         }
+
+== JEE-8 : suppression d'un account
+
+Il faut implémenter la méthode deleteAccount :
+
+    @Override
+    public void deleteAccount(Long id) {
+        Account account = findAccount(id);
+        if(account != null) {
+            em.remove(account);
+        }
+
+    }
