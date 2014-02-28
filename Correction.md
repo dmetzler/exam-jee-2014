@@ -132,3 +132,17 @@ Il faut implémenter la méthode deleteAccount :
         }
 
     }
+
+== JEE-9 Lister les account
+
+il faut implémenter la méthode list() :
+
+    @Override
+    public List<Account> list() {
+        return em.createQuery("SELECT a FROM AccountImpl a").getResultList();
+    }
+
+La syntaxe JQPL d'OpenJPA est un peu plus restrictive que celle d'Hibernate. Il faut donc bien spécifier le SELECT. On pouvait aussi passer par des requêtes déclarées au niveau de l'entité via les @NamedQuery.
+
+
+

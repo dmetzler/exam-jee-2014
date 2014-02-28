@@ -57,8 +57,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> list() {
-        // TODO Auto-generated method stub
-        return null;
+        return em.createQuery("SELECT a FROM AccountImpl a").getResultList();
     }
 
     @Override
