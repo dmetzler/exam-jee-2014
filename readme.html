@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Examen JEE</title>
+
+</head>
+<body>
+<h1>Examen JEE</h1>
+
+<p>A l'aide des deux projets Maven fournis, vous complèterez le code en fonction des instructions ci-dessous. La répartition des points est indiquée entre parenthèse à la fin du titre de chaque sous partie. Les deux parties sont indépendantes les unes des autres.</p>
+
+<p>A la fin de l'examen, vous enverrez par mail, un fichier ZIP  nommé <code>exam-jee-NOM-PRENOM.zip</code> contenant les deux projets complétés. Veillez à supprimer le répertoire <code>target</code> de chaque projet afin que le fichier généré ne pèse que quelques dizaine de Ko. Le mail est à adresser à <code>dmetzler+isen@gmail.com</code> en ajoutant Cédric Dinont <code>cedric.dinont@isen-lille.fr</code> en copie. Il devra contenir votre nom complet dans le body (essayez de personnaliser le corps du mail pour éviter le classement en spam).</p>
+
+<h2>Validation de carte de crédit</h2>
+
+<p>Dans cette première partie, l'objectif est de créer un objet permettant de valider des numéros de cartes de crédit.</p>
+
+<h3>Description de l'algorithme</h3>
+
+<p>L'algorithme que l'on utilisera est relativement simple. Les caractéristiques d'une carte de crédit sont les suivantes :</p>
+
+<ul>
+<li>un numéro formé d'un quadruplet de nombre entre 1 et 9999 séparé par dest tirets (par ex : 1111-2222-3333-4444)</li>
+<li>Les nombres sont à taille fixe et préfixés par des 0 si besoin (ex : 0001)</li>
+<li>un date de validité (mois + année)</li>
+</ul>
+
+
+<p>On dispose aussi d'un numéro appelé CCV qui permettra de valider la carte. Pour valider un carte :</p>
+
+<ul>
+<li>on somme les 4 nombres de la carte (1111 + 2222 + 3333 + 4444 = 11110)</li>
+<li>on ajout le mois et l'année (10/2014 -> 11110 +10 + 2014 =13134)</li>
+<li>on multiplie ce nombre par un <code>SALT</code> qui vaudra 55 pour tout le reste de l'exercice. (13134 * 55 = 772370)</li>
+<li>on prend le résultat du reste de la division euclidienne (modulo) de ce nombre par le nombre maximum du code CCV. Dans le cas d'une carte VISA, le maximum est 1000, dans le case d'une AMEX c'est 10000.  (Visa -> 370, AMEX -> 2370)</li>
+<li>Si le résultat et le CCV donné sont égaux, alors la carte est validée.</li>
+</ul>
+
+
+<h3>Ecriture des tests et implémentation (/7)</h3>
+
+<p>En utilisant l'API <code>org.isen.jee.billing.api</code>, vous écrirez les différents tests permettant de vérifier le fonctionnement d'un validateur (<code>org.isen.jee.billing.api.CCValidator</code>) que vous implémenterez ensuite.</p>
+
+<p>Le test doit vérifier les cas nominaux, mais aussi les cas aux limites (numéros mal formés, dates incorectes etc...).</p>
+
+<h3>Exposition du service via une servlet (/3)</h3>
+
+<p>A l'aide de la classe de test <code>org.isen.jee.billing.ServletTest</code> vous ferez en sorte d'écrire une servlet permettant de répondre aux requêtes testées.</p>
+
+<p>Attention, les méthodes de test déjà présentes ne doivent pas être modifiées, en revanche vous pourrez ajouter vos propres méthodes de test dans la classe.</p>
+
+<p>Pour activer votre servlet, vous pourrez soit utiliser la déclaration dans le fichier <code>web.xml</code>, soit décommenter les lignes 46 et 47 de la classe <code>org.isen.jee.billing.JettyHarness</code> et utiliser les annotations.</p>
+
+<h3>Interface web de validation (/3)</h3>
+
+<p>A l'aide d'une page <code>JSP</code>, vous présenterez une interface web permettant de remplir un formulaire contenant les différentes informations d'une carte de crédit.</p>
+
+<p>A la validation de celui-ci, un message s'affiche pour dire si la carte est valide ou non.</p>
+
+<p>Si une carte a déjà été validée, le formulaire sera déjà rempli avec les informations de la carte, sans le CCV. On utilisera pour cela une ou plusieurs variables de session.</p>
+
+<h3>Note sur les outils</h3>
+
+<p>Pour cette partie, on dispose d'un classe <code>JettyHarness</code> qui embarque un conteneur de servlet embarqué. La servlet sera donc testable directement dans le test.</p>
+
+<p>En alternative, on pourra aussi en ligne de commande lancer la commande</p>
+
+<pre><code>mvn jetty:run
+</code></pre>
+
+<p>Qui permet de lancer Jetty avec le projet embarqué. On y accèdera par exemple via l'adresse :</p>
+
+<pre><code>http://localhost:8080/cc?ccNumber=0001-0000-0000-0000&amp;month=10&amp;year=2014&amp;ccv=375
+</code></pre>
+
+<h2>Compte bancaire</h2>
+
+<h3>Persistence de données (/10)</h3>
+
+<p>Dans cette partie, on s'intéressera à persister des informations de compte bancaire ainsi que les transactions associées dans une base de données. On utilisera pour cela deux objets avec les propriétés suivantes :</p>
+
+<ul>
+<li><p><code>Account</code>:</p>
+
+<ul>
+<li>ownerName : Nom du client associé au compte</li>
+<li>balance : Etat du compte</li>
+<li>ccNumber: numéro de carte de crédit</li>
+<li>transcations : la liste des transactions</li>
+</ul>
+</li>
+<li><p><code>Transaction</code>:</p>
+
+<ul>
+<li>type : Débit ou Crédit</li>
+<li>description: la description de la transaction</li>
+<li>amount: montant de la transaction</li>
+<li>date: date de la transaction</li>
+</ul>
+</li>
+</ul>
+
+
+<p>A l'aide de l'API fournie et de JPA, faites en sorte que les tests présents dans la classe <code>org.isen.jee.billing.AccountTest</code> passent au vert.</p>
+
+<h3>Web service (/7)</h3>
+
+<p>En implémentant un service de type JAX-RS, faites en sorte que les tests de la classe <code>org.isen.jee.billing.AccountServiceTest</code> passent au vert.</p>
+
+<h3>Note sur les outils</h3>
+
+<p>Pour cette partie, on dispose d'un classe <code>ContainerHarness</code> qui embarque un conteneur d'EJB embarqué. Les tests embarquent donc tout le nécessaire pour démarrer un mini serveur d'applicaiton embarqué.</p>
+
+<p>On pourra aussi en ligne de commande lancer les commandes suivantes :</p>
+
+<pre><code>mvn clean install
+mvn tomee:run
+</code></pre>
+
+<p>Qui permettent de lancer TomEE avec le projet embarqué. L'API sera alors disponible à l'adresse suivante :</p>
+
+<pre><code>http://localhost:8080/2-jpa/api/
+</code></pre>
+</body>
+</html>

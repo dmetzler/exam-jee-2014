@@ -1,0 +1,18 @@
+<resources>
+  <Resource id="jdbc/account" type="javax.sql.DataSource">
+    JdbcDriver = org.hsqldb.jdbcDriver
+    JdbcUrl = jdbc:hsqldb:mem:account
+    UserName = SA
+    Password =
+    JtaManaged = true
+  </Resource>
+
+
+  <Resource id="jdbc/account-unmanaged" type="javax.sql.DataSource">
+    JdbcDriver = org.hsqldb.jdbcDriver
+    JdbcUrl = jdbc:hsqldb:mem:account
+    UserName = SA
+    Password =
+    JtaManaged = false
+  </Resource>
+</resources>
