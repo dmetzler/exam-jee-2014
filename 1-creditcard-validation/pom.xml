@@ -9,7 +9,7 @@
   </parent>
 
 
-  <artifactId>1-creditcard-validation</artifactId>
+  <artifactId>1-creditcard-validation-correction</artifactId>
   <name>ISEN JEE :: Validation de carte de crédit</name>
   <packaging>war</packaging>
 

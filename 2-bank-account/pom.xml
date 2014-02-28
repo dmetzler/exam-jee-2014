@@ -9,7 +9,7 @@
   </parent>
 
 
-  <artifactId>2-bank-account</artifactId>
+  <artifactId>2-bank-account-correction</artifactId>
   <name>ISEN JEE :: Compte bancaire</name>
   <packaging>war</packaging>
   <description>Some objects to persist</description>
