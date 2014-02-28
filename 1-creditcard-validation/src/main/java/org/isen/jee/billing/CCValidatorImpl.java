@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import org.isen.jee.billing.api.CCValidator;
 import org.isen.jee.billing.api.CreditCard;
+import org.joda.time.DateTime;
 
 public class CCValidatorImpl implements CCValidator {
 
@@ -15,6 +16,19 @@ public class CCValidatorImpl implements CCValidator {
 
     @Override
     public boolean isValid(CreditCard card, int ccv) {
+
+        return isValidDate(card) && ccvMatchesNumber(card, ccv);
+
+    }
+
+    private boolean isValidDate(CreditCard card) {
+        //On calcule la fin du mois
+        DateTime cardDate = new DateTime(card.getYear(), card.getMonth(), 15,
+                0, 0, 0, 0).dayOfMonth().withMaximumValue();
+        return cardDate.isAfterNow();
+    }
+
+    private boolean ccvMatchesNumber(CreditCard card, int ccv) {
         Matcher m = CREDIT_CARD_PATTERN.matcher(card.getNumber());
         if (!m.find()) {
             return false;
@@ -26,7 +40,6 @@ public class CCValidatorImpl implements CCValidator {
             sum += card.getMonth() + card.getYear();
             sum *= VALIDATOR_SALT;
             return sum % card.getType().getMaxCCVNumber() == ccv;
-
         }
     }
 

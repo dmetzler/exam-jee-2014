@@ -43,3 +43,12 @@ On veut vérifier que certain format de nombre ne passent pas. On va donc ajoute
         }
     }
 
+
+
+== JEE-4 : Vérification de la date
+
+On va vérifier maintenant qu'une date incorrecte ne permet pas de valider une date.
+
+Cela se fait en ajoutant une clause isValidDate à l'implémentation du validateur. Cela nous permet aussi d'extraire la validation par CCV dans une méthode distincte.
+
+Il faut aussi mettre à jour les test précédents pour qu'il ne plantent pas une fois la date prise au hasard soit dépassée.
