@@ -5,31 +5,36 @@ import org.isen.jee.billing.api.CreditCard;
 
 public class CreditCardImpl implements CreditCard {
 
+    private String cardNumber;
+    private int month;
+    private int year;
+    private CCType type;
+
     public CreditCardImpl(String cardNumber, int month, int year, CCType type) {
+        this.cardNumber = cardNumber;
+        this.month = month;
+        this.year = year;
+        this.type = type;
     }
 
     @Override
     public CCType getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return type;
     }
 
     @Override
     public String getNumber() {
-        // TODO Auto-generated method stub
-        return null;
+        return cardNumber;
     }
 
     @Override
     public int getMonth() {
-        // TODO Auto-generated method stub
-        return 0;
+        return month;
     }
 
     @Override
     public int getYear() {
-        // TODO Auto-generated method stub
-        return 0;
+        return year;
     }
 
 }
