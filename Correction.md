@@ -1,6 +1,6 @@
-= Correction de l'examen JEE 2014
+# Correction de l'examen JEE 2014
 
-== JEE-1 : Premier test
+## JEE-1 : Premier test
 
 Ce premier test est le test nominal : on prend une carte de crédit valide, et on vérifie qu'un validateur nous renvoie bien true. Cela nous fait créer deux classes : CreditCardImpl et CCValidatorImpl.
 
@@ -16,7 +16,7 @@ Ce premier test est le test nominal : on prend une carte de crédit valide, et o
 Une première implémentation de isValid() peut juste retourner true : on a un premier test qui passe
 
 
-== JEE-2 : test d'invalidation d'une carte
+## JEE-2 : test d'invalidation d'une carte
 
 Un deuxième test va nous obliger à écrire une implémentation moins naïve
 
@@ -31,9 +31,11 @@ En se basant sur l'exemple StringCalculator du cours, on va utiliser une express
 
 Une fois que le test passe, on va refactorer la méthode de test pour avoir moins de redondance au niveau du code.
 
+Une solutions à base de String#split() et de vérification du format était bonne aussi. Cependant la solution à base d'expression régulière est la plus efficace.
 
 
-== JEE-3 : Vérification de formats
+
+## JEE-3 : Vérification de formats
 
 On veut vérifier que certain format de nombre ne passent pas. On va donc ajouter un test avec différents nombres de carte malformés. Pour renforcer le test (et suite à une bonne idée de Rémi Roussel), on peut tester qu'aucun CCV ne marche pour une carte malformée. Cela se fait par l'intermédiaire de la méthode suivante :
 
@@ -45,15 +47,15 @@ On veut vérifier que certain format de nombre ne passent pas. On va donc ajoute
 
 
 
-== JEE-4 : Vérification de la date
+## JEE-4 : Vérification de la date
 
 On va vérifier maintenant qu'une date incorrecte ne permet pas de valider une date.
 
 Cela se fait en ajoutant une clause isValidDate à l'implémentation du validateur. Cela nous permet aussi d'extraire la validation par CCV dans une méthode distincte.
 
-Il faut aussi mettre à jour les test précédents pour qu'il ne plantent pas une fois la date prise au hasard soit dépassée.
+Il faut aussi mettre à jour les tests précédents pour qu'il ne plantent pas une fois que la date prise au hasard soit dépassée.
 
-== JEE-5 : Vérification d'une AMEX
+## JEE-5 : Vérification d'une AMEX
 
     On ajoute un test pour vérifier le cas de l'AMEX
 
@@ -65,7 +67,7 @@ Il faut aussi mettre à jour les test précédents pour qu'il ne plantent pas un
         assertFalse(validator.isValid(card, 3456));
     }
 
-== JEE-6 : Servlet
+## JEE-6 : Servlet
 
 On crée une classe CreditCardServlet qui étends HttpServlet. On l'annote avec @WebServlet("/cc") et on décommente la ligne de JettyHarness : on a une servlet qui démarre et qui peut commencer à servir des requêtes.
 
@@ -86,7 +88,7 @@ On peut maintenant récupérer les paramètres de la requête pour construire un
 
 
 
-== JEE-7 JPA : création d'un Account
+## JEE-7 JPA : création d'un Account
 
 En exécutant AccountTest, on a un première erreur :
 
@@ -120,7 +122,7 @@ Enfin, il faut dans le DAO coder la méthode findAccount.
             return em.find(AccountImpl.class, id);
         }
 
-== JEE-8 : suppression d'un account
+## JEE-8 : suppression d'un account
 
 Il faut implémenter la méthode deleteAccount :
 
@@ -133,7 +135,7 @@ Il faut implémenter la méthode deleteAccount :
 
     }
 
-== JEE-9 Lister les account
+## JEE-9 Lister les account
 
 il faut implémenter la méthode list() :
 
@@ -146,7 +148,7 @@ La syntaxe JQPL d'OpenJPA est un peu plus restrictive que celle d'Hibernate. Il 
 
 
 
-== JEE-10 Trouver un compte en fonction du numéro de CB
+## JEE-10 Trouver un compte en fonction du numéro de CB
 
 C'est encore la même API que l'on utilise en passant en plus un paramètre.
 
@@ -160,7 +162,7 @@ C'est encore la même API que l'on utilise en passant en plus un paramètre.
         }
 
 
-== JEE-11 Ajout d'une transaction
+## JEE-11 Ajout d'une transaction
 
 L'ajout d'une transaction nous demande de modifer l'entité pour gérer une relation @OneToMany :
 
@@ -181,7 +183,7 @@ au niveau du DAO, l'implémentation de addTransaction devra créer une transacti
         }
 
 
-== JEE-12 JAX-RS
+## JEE-12 JAX-RS
 
 Comme j'avais oublié d'enlever l'implémentation de l'objet AccountService, il suffisait de donner un moyen de sérialiser un Account en utilisant JAXB et ajouter l'annoation @XmlRootElement à la classe AccountImpl.
 
